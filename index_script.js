@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     async function fetchStatus(orderID) {
         displaySpinner(true);
         try {
-            const response = await fetch('https://bridge.espco.xyz/bigsave-liquor-get-status', {
+            const response = await fetch('https://4c81-165-0-183-13.ngrok-free.app/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ order_id: orderID }),
