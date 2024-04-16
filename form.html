@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Tracking</title>
+    <link rel="icon" type="image/x-icon" href="liquor-images/favicon/cropped-Favicon-32x32.png">
+    <link rel="stylesheet" type="text/css" href="test-panel.css">
+    <link href="styles.css" type="text/css" rel="stylesheet">    
+    <!-- Add Firebase SDKs and initialize Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-functions.js"></script>
+    <script src="firebase_config.js"></script>
+    <script src="index.js"></script>
+    <meta name="theme-color" content="#ffffff">
+    <link defer="defer" href="https://fonts.googleapis.com/css?family=Roboto:300,600&amp;display=swap" rel="stylesheet" crossorigin="">
+</head>
+<body>
+ <div class="container">
+    <!-- BigSave Logo -->
+    <div id="bigsave-tracking">
+        <div class="text-center">
+            <center>
+              <a href="https://bigsaveliquor.co.za"><img src="https://bigsaveliquor.co.za/wp-content/uploads/2023/08/Big-Save-Liquor-Black-Blue.png" width="150" alt="Big Save Logo" title="Big Save Logo"></a>
+            </center>
+        </div>
+    </div>
+    <!-- Form Section -->
+    <div class="form">
+        <form id="orderIDForm">
+            <label for="orderID"><b>Enter Your Order Number:</b></label><br>
+            <!-- Adjusted padding-left to create space between "B" and the border -->
+            <!--<input id="orderID" name="orderID" required="" type="text" style="padding-left: 5px;"><br><br>-->
+            <input id="orderID" name="orderID" required="" type="text" style="padding-left: 5px;" value="BSL" readonly><br><br>
+            <input type="submit" value="Track" style="background-color: blue; color: white;">
+        </form>
+    </div>
+    
+    <!-- Add the tracking status section here -->
+    <!-- Add the footer here -->
+    <div style="clear: both"><!-- --></div>    
+</div>
+<div class="footer">
+    <p>&copy; 2024 Big Save. All rights reserved.</p>
+</div>
+
+<!-- JavaScript for handling form submission and constructing the tracking URL -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Make the input field editable
+    document.getElementById('orderID').removeAttribute('readonly');
+
+    // Function to handle input events
+    function handleInput(event) {
+        // Check if the value starts with "BS"
+        if (!event.target.value.startsWith('BSL')) {
+            // If not, revert the change
+            event.target.value = 'BSL';
+            // Prevent the input event from changing the value
+            event.preventDefault();
+        }
+    }
+
+    // Attach the event listener
+    document.getElementById('orderID').addEventListener('input', handleInput);
+
+    document.getElementById('orderIDForm').addEventListener('submit', function(event) {
+        // Prevent the form from submitting normally
+        event.preventDefault();
+
+        // Get the order ID from the input field
+        var orderID = document.getElementById('orderID').value;
+
+        // Construct the tracking URL
+        var trackingURL = 'index.html?orderID=' + encodeURIComponent(orderID);
+
+        // Redirect the user to the tracking URL
+        window.location.href = trackingURL;
+    });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+
+        .buttons button {
+            font-weight: bold;
+        }
+
+
+        /* Footer styles */
+
+
+        .form {
+            text-align: left;
+            padding: 20px 20px; /* Reduced vertical padding */
+            max-width: 600px;
+            margin: 30px auto;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.1);
+            border-radius: 5px;
+        }
+
+        .form label {
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 5px; /* Reduced margin for less height */
+            display: block;
+        }
+
+        .form input[type="text"] {
+            width: calc(100% - 20px); /* Subtracting padding from width */
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px; /* Reduced margin for less height */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            height: 40px; /* Fixed height for the input field */
+        }
+
+        .form input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            height: 40px; /* Fixed height for the submit button */
+        }
+
+        .hidden {
+            display: none !important; /* Overrides other display properties */
+        }
+        

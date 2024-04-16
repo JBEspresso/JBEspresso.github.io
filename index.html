@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Tracking</title>
+    <link rel="icon" type="image/x-icon" href="liquor-images/favicon/cropped-Favicon-32x32.png">
+    <link rel="stylesheet" type="text/css" href="test-panel.css">
+    <link href="styles.css" type="text/css" rel="stylesheet">    
+    <!-- Add Firebase SDKs and initialize Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-functions.js"></script>
+    <script src="firebase_config.js"></script>
+    <script src="index_script.js"></script>
+    <meta name="theme-color" content="#ffffff">
+    <link defer="defer" href="https://fonts.googleapis.com/css?family=Roboto:300,600&amp;display=swap" rel="stylesheet" crossorigin="">
+</head>
+<body>
+ <div class="container">
+    <div id="spinner" class="spinner-container" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+   <!-- <div id="resultBox"></div> -->
+    <div id="bigsave-tracking">
+        <div class="text-center">
+            <center>
+              <a href="https://bigsaveliquor.co.za"><img src="https://bigsaveliquor.co.za/wp-content/uploads/2023/08/Big-Save-Liquor-Black-Blue.png" width="150" alt="Big Save Logo" title="Big Save Logo"></a>
+            </center>
+        </div>
+        <div class="pt-16 px-8 md:pt-6 pb-4 relative">
+            <div style="max-width: 950px; margin: auto;">
+                <div class="flex flex-col md:flex-row md:justify-between items-center">
+                    <h1 class="text-xl font-bold text-gray-900 uppercase">
+                        <div class="cursor-pointer ml-1">Order <span id="orderID">123456</span> for <span id="customerName">Customer Name</span></div>
+
+
+                    </h1>
+                    <div class="flex flex-row">
+                        <div class="-mr-3">
+                            <a id="refreshLink" href="#">Refresh</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="mb-8">
+                        <div>
+                            <div class="xs:shadow-md rounded-md bg-white mt-3 mb-2 border-gray-100 border p-0 block ">
+                                <div class=" uppercase bg-primary-100 rounded-t-md p-2 text-center font-bold font-white">
+                                    <h3 class="text-white" id="statusText">Status</h3>
+                                    <div class="text-white" id="driverName"></div>
+                                    <div class="text-white" id="supportNumbers">Support: 076 983 5383 / 082 793 1338</div>
+                                </div>
+                                <div class="p-4 relative">
+                                    <div class="invisible md:visible horizontal-line"></div>
+                                    <div class="grid grid-cols-1 md:grid-cols-6 gap-y-4 md:gap-y-0" style="margin-top: -55px;">
+                                        <!-- Tracking status icons and information -->
+                                        <!-- Order Received -->
+                                        <div class=" grid grid-cols-2 md:grid-cols-1">
+                                            <div class="h-24 md:h-32 justify-self-center self-center">
+                                                <div class="flex items-center w-full h-full line-container">
+                                                    <div class="tracking-image-container" id="statusOrdered">
+                                                        <img src="liquor-images/Ordered_w_blue.png" style="width: 80px; height: 80px;">
+                                                    </div>
+                                                    <div class=" visible md:invisible vertical-line"></div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center md:justify-center">
+                                                <div class="h:32 md:h-24 text-gray-900">
+                                                    <div class="uppercase font-bold md:text-center text-sm">Received</div>
+                                                    <div class="md:text-center">
+                                                        <!-- Add IDs for date and time placeholders -->
+                                                        <div id="orderDate">Loading...</div>
+                                                        <div id="orderTime"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <!-- Preparing -->
+                                        <div class=" grid grid-cols-2 md:grid-cols-1">
+                                            <div class="h-24 md:h-32 justify-self-center self-center">
+                                                <div class="flex items-center w-full h-full line-container">
+                                                    <div class="tracking-image-container" id="statusPreparing">
+                                                        <img src="liquor-images/Preparing_w_grey.png" style="width: 80px; height: 80px;">
+                                                    </div>
+                                                    <div class=" visible md:invisible vertical-line"></div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center md:justify-center">
+                                                <div class="h:32 md:h-24 text-gray-900">
+                                                    <div class="uppercase font-bold md:text-center text-sm">Preparing</div>
+                                                    <div class="md:text-center">
+                                                        <!-- Add IDs for date and time placeholders -->
+                                                        <div id="prepareDate">Loading...</div>
+                                                        <div id="prepareTime"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <!-- Dispatched -->
+                                        <div class=" grid grid-cols-2 md:grid-cols-1">
+                                            <div class="h-24 md:h-32 justify-self-center self-center">
+                                                <div class="flex items-center w-full h-full line-container">
+                                                    <div class="tracking-image-container" id="statusDispatched">
+                                                        <img src="liquor-images/Dispatched_w_grey.png" style="width: 80px; height: 80px;">
+                                                    </div>
+                                                    <div class=" visible md:invisible vertical-line"></div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center md:justify-center">
+                                                <div class="h:32 md:h-24 text-gray-900">
+                                                    <div class="uppercase font-bold md:text-center text-sm">Dispatched</div>
+                                                    <div class="md:text-center">
+                                                        <!-- Add IDs for date and time placeholders -->
+                                                        <div id="dispatchDate">Loading...</div>
+                                                        <div id="dispatchTime"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <!-- In Route -->
+                                        <div class=" grid grid-cols-2 md:grid-cols-1">
+                                            <div class="h-24 md:h-32 justify-self-center self-center">
+                                                <div class="flex items-center w-full h-full line-container">
+                                                    <div class="tracking-image-container" id="statusInRoute">
+                                                        <img src="liquor-images/InRoute_w_grey.png" style="width: 80px; height: 80px;">
+                                                    </div>
+                                                    <div class=" visible md:invisible vertical-line"></div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center md:justify-center">
+                                                <div class="h:32 md:h-24 text-gray-900">
+                                                    <div class="uppercase font-bold md:text-center text-sm">In Route</div>
+                                                    <div class="md:text-center">
+                                                        <!-- Add IDs for date and time placeholders -->
+                                                        <div id="inrouteDate">Loading...</div>
+                                                        <div id="inrouteTime"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <!-- Arrived -->
+                                        <div class=" grid grid-cols-2 md:grid-cols-1">
+                                            <div class="h-24 md:h-32 justify-self-center self-center">
+                                                <div class="flex items-center w-full h-full line-container">
+                                                    <div class="tracking-image-container" id="statusArrived">
+                                                        <img src="liquor-images/Arrived_w_grey.png" style="width: 80px; height: 80px;">
+                                                    </div>
+                                                    <div class=" visible md:invisible vertical-line"></div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center md:justify-center">
+                                                <div class="h:32 md:h-24 text-gray-900">
+                                                    <div class="uppercase font-bold md:text-center text-sm">Arrived</div>
+                                                    <div class="md:text-center">
+                                                        <!-- Add IDs for date and time placeholders -->
+                                                        <div id="arriveDate">Loading...</div>
+                                                        <div id="arriveTime"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <!-- Completed -->
+                                        <div class=" grid grid-cols-2 md:grid-cols-1">
+                                            <div class="h-24 md:h-32 justify-self-center self-center">
+                                                <div class="flex items-center w-full h-full line-container">
+                                                    <div class="tracking-image-container" id="statusCompleted">
+                                                        <img src="liquor-images/Completed_w_grey.png" style="width: 80px; height: 80px;">
+                                                    </div>
+                                                    <div class=" visible md:invisible vertical-line"></div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center md:justify-center">
+                                                <div class="h:32 md:h-24 text-gray-900">
+                                                    <div class="uppercase font-bold md:text-center text-sm">Completed</div>
+                                                    <div class="md:text-center">
+                                                        <!-- Add IDs for date and time placeholders -->
+                                                        <div id="completeDate">Loading...</div>
+                                                        <div id="completeTime"></div>
+                                                    </div>
+                                                </div>
+                                            </div>                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="clear: both"><!-- --></div>    
+</div>
+<div class="footer">
+    <p>&copy; 2024 Big Save. All rights reserved.</p>
+</div>
+
+</body>
+</html>
+                                        
+                                        
